@@ -17,6 +17,7 @@
 - 링크 `id`는 영문 소문자와 하이픈. 그림 파일 이름이 된다.
 - 링크마다 `scene`(영어 한두 문장)을 쓴다. 그 링크를 상징하는 3D 미니어처 장면 하나, 주요 소품 3~5개. 쓴 뒤 선생님에게 한국어로 요약해 확인받는다.
 - `profile.hero`가 `"image"`이면 `profile.heroScene`에 사이트 전체를 상징하는 물체 하나를 쓴다. 조형물을 원하지 않으면 `"none"`.
+- 선생님이 실제로 도는 3D 조형물을 원하면 `"sculpture"`(고급형). Blender 설치와 Meshy 계정이 필요하다. 절차는 아래 "고급형 조형물".
 - 묶음 표장을 원하면 묶음에 `emblemScene`을, 첫 화면 배경 그림을 원하면 `profile.backgroundScene`을 쓴다(둘 다 선택).
 - 예시 링크(`example.com`, `teacher@example.com`)와 예시 이름은 모두 선생님 내용으로 바꾼다.
 
@@ -36,6 +37,16 @@
 4. 그림을 직접 열어 보고 글자, 로고, 실제 사람 얼굴이 들어간 그림은 다시 만들게 한다.
 5. 그림이 없어도 사이트는 색 블록과 아이콘으로 동작한다. 그림은 천천히 채워도 된다.
 
+## 고급형 조형물 (선택)
+
+`docs/advanced-3d.md`를 따른다. 요약:
+
+1. `profile.hero`를 `"sculpture"`로 바꾸고, 콘셉트에 맞는 소품 6개를 선생님과 정해 `docs/advanced-3d.md`의 "소품 목록" 표를 채운다(파일 이름, 영어 프롬프트).
+2. 선생님이 Meshy로 만든 GLB를 `art-raw/3d/`에 넣으면 `npm run sculpture -- --mode test`로 한 장을 렌더해 `art-raw/render/test.png`를 함께 본다.
+3. 확정되면 `npm run sculpture -- --mode turntable`, `npm run art`, `npm run check`.
+4. Meshy 소품을 썼으면 `profile.credits`에 Meshy 출처(CC BY 4.0)를 넣는다.
+5. Blender가 없거나 렌더가 실패하면 기본형(`"image"`)으로 되돌릴 수 있다고 알린다.
+
 ## 명령어
 
 | 명령 | 하는 일 |
@@ -45,6 +56,7 @@
 | `npm run check` | 링크, 그림 파일, 글자 대비 검사 |
 | `npm run brief` | 그림 지시서 `docs/art-brief.md` 만들기 |
 | `npm run art` | `art-raw/` 그림을 웹용으로 변환 |
+| `npm run sculpture -- --mode test` | 고급형 조형물 한 장 렌더(Blender). `--mode turntable`은 회전 60장, `--mode emblems`는 3D 표장 |
 | `npm run build` | 배포 전 빌드 확인 |
 
 ## 작업을 끝낼 때마다

@@ -12,8 +12,13 @@ const body = Noto_Sans_KR({ subsets: ["latin"], variable: "--font-body", display
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
-// The hero object doubles as the share-preview picture; without it the preview shows text only.
-const shareImages = visuals.heroObject ? ["/visuals/hero-object-720.webp"] : [];
+// The hero picture doubles as the share-preview picture; without it the preview shows text only.
+const shareImages =
+  profile.hero === "sculpture" && visuals.sculptureFrames
+    ? ["/visuals/sculpture/720/f-000.webp"]
+    : profile.hero === "image" && visuals.heroObject
+      ? ["/visuals/hero-object-720.webp"]
+      : [];
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

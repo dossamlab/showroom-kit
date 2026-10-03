@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { profile } from "@/config/site";
 import { visuals } from "@/config/visuals";
 import HeroObject from "./HeroObject";
+import HeroSculpture from "./HeroSculpture";
 import { EASE, directLinks, groups, newTabProps } from "./utils";
 
 const fadeUp = (delay: number) => ({
@@ -64,6 +65,7 @@ export default function Hero() {
         ))}
       </motion.div>
       {profile.hero === "image" && visuals.heroObject ? <HeroObject /> : null}
+      {profile.hero === "sculpture" && visuals.sculptureFrames ? <HeroSculpture /> : null}
     </header>
   );
 }

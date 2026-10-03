@@ -81,6 +81,18 @@ const has = (name) => existsSync(`public/visuals/${name}`);
 if (visuals.heroObject) assert.ok(has("hero-object-720.webp") && has("hero-object-480.webp"), "visuals.heroObject가 true인데 조형물 파일이 없음 (npm run art)");
 if (visuals.heroBg) assert.ok(has("hero-bg-1280.webp") && has("hero-bg-2400.webp"), "visuals.heroBg가 true인데 배경 파일이 없음 (npm run art)");
 if (profile.hero === "image" && !visuals.heroObject) warnings.push("조형물 그림이 아직 없음 (art-raw/hero-object.png를 넣고 npm run art)");
+for (let i = 0; i < visuals.sculptureFrames; i++) {
+  for (const size of [720, 480]) {
+    const frame = `sculpture/${size}/f-${String(i).padStart(3, "0")}.webp`;
+    assert.ok(has(frame), `회전 조형물 프레임 없음: public/visuals/${frame} (npm run art)`);
+  }
+}
+if (profile.hero === "sculpture" && !visuals.sculptureFrames) warnings.push("회전 조형물이 아직 없음 (npm run sculpture -- --mode turntable 뒤 npm run art)");
+// Meshy free-plan models are CC BY 4.0, so the page has to credit Meshy.
+const usesMeshy = existsSync("art-raw/3d") && readdirSync("art-raw/3d").some((name) => name.endsWith(".glb"));
+if (usesMeshy && !profile.credits.some((credit) => /meshy/i.test(credit.text))) {
+  warnings.push('art-raw/3d에 Meshy 소품이 있는데 출처 문구가 없음 (profile.credits에 { text: "3D 소품: Meshy (CC BY 4.0)", href: "https://www.meshy.ai/" })');
+}
 
 assert.ok(!JSON.stringify({ profile, cards }).includes("—"), "긴 줄표 문자는 쓰지 않음");
 

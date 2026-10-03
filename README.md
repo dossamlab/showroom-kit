@@ -14,7 +14,12 @@
 | **테마** | 밤의 과학관, 라벤더 실험실, 연구 노트. 말로 설명하면 AI가 새 테마를 만든다(글자 대비 자동 검사) |
 | **그림 지시서** | `npm run brief`가 그림마다 Gemini·ChatGPT에 그대로 붙여 넣을 요청문을 만든다 |
 | **검사** | 링크, 그림 파일, 글자 대비를 `npm run check`로 확인 |
+| **고급형 조형물** | Meshy 소품 + Blender 회전 렌더(선택, `npm run sculpture`) |
 | **AI 안내** | `AGENTS.md` 하나에 질문 순서와 규칙. Claude Code, 안티그래비티, Codex, Copilot 어디서 열어도 같은 순서 |
+
+## 고급형 조형물 (선택)
+
+Blender와 Meshy가 있으면 첫 화면 조형물을 실제로 360도 도는 3D로 바꿀 수 있다. Meshy로 만든 소품을 Blender가 테마 색 받침대와 나선 궤도에 올려 회전 장면으로 렌더한다. 순서와 Meshy 지시서, AI 에이전트에게 맡길 요청서는 [docs/advanced-3d.md](docs/advanced-3d.md)에 있다.
 
 ## 필요한 것
 

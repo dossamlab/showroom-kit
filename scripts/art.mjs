@@ -1,6 +1,6 @@
 // Converts art-raw/*.png into the WebP files the page loads and records which optional pictures exist.
 // File names come from docs/art-brief.md. Run: npm run art
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -49,13 +49,45 @@ for (const file of pngs) {
   console.log(`변환: ${file}`);
 }
 
+// Advanced hero: Blender turntable frames (npm run sculpture). One square crop for every frame, the union
+// of what the sculpture covers at each angle, so the margin goes away without the turntable jumping.
+const SCULPTURE = `${RAW}/sculpture`;
+const frames = existsSync(SCULPTURE) ? readdirSync(SCULPTURE).filter((name) => name.endsWith(".png")).sort() : [];
+if (frames.length) {
+  const box = { left: Infinity, top: Infinity, right: 0, bottom: 0 };
+  let size = 0;
+  for (const file of frames) {
+    const source = path.join(SCULPTURE, file);
+    size = (await sharp(source).metadata()).width;
+    const { info } = await sharp(source).trim().toBuffer({ resolveWithObject: true });
+    box.left = Math.min(box.left, -info.trimOffsetLeft);
+    box.top = Math.min(box.top, -info.trimOffsetTop);
+    box.right = Math.max(box.right, -info.trimOffsetLeft + info.width);
+    box.bottom = Math.max(box.bottom, -info.trimOffsetTop + info.height);
+  }
+  const side = Math.min(size, Math.round(Math.max(box.right - box.left, box.bottom - box.top) * 1.04));
+  const clamp = (value) => Math.max(0, Math.min(size - side, Math.round(value)));
+  const crop = { left: clamp((box.left + box.right - side) / 2), top: clamp((box.top + box.bottom - side) / 2), width: side, height: side };
+  rmSync(`${OUT}/sculpture`, { recursive: true, force: true });
+  for (const width of [720, 480]) {
+    mkdirSync(`${OUT}/sculpture/${width}`, { recursive: true });
+    for (const [index, file] of frames.entries()) {
+      const out = `${OUT}/sculpture/${width}/f-${String(index).padStart(3, "0")}.webp`;
+      await sharp(path.join(SCULPTURE, file)).extract(crop).resize(width, width).webp({ quality: 74, alphaQuality: 80 }).toFile(out);
+    }
+  }
+  console.log(`변환: 회전 조형물 ${frames.length}장`);
+}
+
 const has = (name) => existsSync(`${OUT}/${name}`);
+const sculptureDir = `${OUT}/sculpture/720`;
 const visuals = {
   heroObject: has("hero-object-720.webp") && has("hero-object-480.webp"),
-  heroBg: has("hero-bg-1280.webp") && has("hero-bg-2400.webp")
+  heroBg: has("hero-bg-1280.webp") && has("hero-bg-2400.webp"),
+  sculptureFrames: existsSync(sculptureDir) ? readdirSync(sculptureDir).filter((name) => name.endsWith(".webp")).length : 0
 };
 writeFileSync(
   "src/config/visuals.ts",
-  `// Written by \`npm run art\`. Says which optional pictures exist so the page only asks for files that are there.\nexport const visuals: { heroObject: boolean; heroBg: boolean } = ${JSON.stringify(visuals)};\n`
+  `// Written by \`npm run art\`. Says which optional pictures exist so the page only asks for files that are there.\nexport const visuals: { heroObject: boolean; heroBg: boolean; sculptureFrames: number } = ${JSON.stringify(visuals)};\n`
 );
 console.log(`visuals: ${JSON.stringify(visuals)}`);

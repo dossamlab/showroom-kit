@@ -59,7 +59,7 @@ export type Profile = {
   kicker: string; // 맨 위 칩과 브라우저 탭 제목, 예: "○○고 교사 홍길동"
   heroTitle: string; // 큰 제목
   description: string; // 한 줄 소개
-  hero: "image" | "none"; // "image"면 첫 화면 조형물 그림(art-raw/hero-object.png)을 보여 준다
+  hero: "image" | "sculpture" | "none"; // "image": 그림 한 장 조형물(art-raw/hero-object.png). "sculpture": Blender 회전 조형물(docs/advanced-3d.md)
   heroScene: string; // 조형물 그림 장면
   backgroundScene?: string; // 첫 화면 배경 그림(선택)
   credits: Credit[]; // 화면 맨 아래 출처 문구. 비어 있으면 보이지 않는다

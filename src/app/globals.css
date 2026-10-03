@@ -287,6 +287,37 @@ nextjs-portal,
   }
 }
 
+/* Advanced hero: Blender turntable frames drawn on a canvas. */
+.sr-sculpture {
+  position: relative;
+  z-index: 0;
+  width: min(94vw, 74vh, 660px);
+  aspect-ratio: 1;
+  margin: 0 auto -130px;
+}
+
+.sr-sculpture::before {
+  content: "";
+  position: absolute;
+  inset: 6% 10% 28%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow), transparent 70%);
+  filter: blur(24px);
+}
+
+.sr-sculpture canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .sr-sculpture {
+    margin-bottom: -80px;
+  }
+}
+
 /* Strip */
 .sr-marquee {
   position: relative;

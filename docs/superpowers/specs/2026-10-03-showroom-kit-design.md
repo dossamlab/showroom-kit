@@ -156,3 +156,5 @@
 ## 2단계 예고
 
 고급형 조형물: `scripts/blender/` 회전 렌더 장면을 테마 색(받침대·테·조명)과 연동하고, Meshy 소품 지시서와 출처 문구 처리를 붙인다. 별도 설계 문서로 진행한다.
+
+2026-10-04 구현: `profile.hero: "sculpture"`, `npm run sculpture`(scripts/sculpture.mjs가 테마 색을 `art-raw/render/theme.json`으로 넘기고 Blender 실행), 프레임은 `art-raw/sculpture/`에서 `npm run art`가 변환, 장 수는 `visuals.sculptureFrames`. 소품은 `art-raw/3d/*.glb`(최대 6개, 파일 이름 순), 3D 표장은 `art-raw/3d/emblem-<묶음 id>.glb`. Meshy 출처 누락은 `npm run check`가 경고한다. 안내는 `docs/advanced-3d.md`.
