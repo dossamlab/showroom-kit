@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>showroom-kit 사용법</title>
+<style>
+  :root { --bg: #0C0F24; --card: #151936; --ink: #EDEBFA; --dim: #9EA3C6; --gold: #F2C879; --line: rgba(255,255,255,.12); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif; line-height: 1.7; word-break: keep-all; }
+  main { max-width: 860px; margin: 0 auto; padding: 48px 20px 80px; }
+  h1 { font-size: 32px; margin: 0 0 6px; }
+  .lead { color: var(--dim); margin: 0 0 32px; }
+  .flow { display: grid; gap: 14px; }
+  .step { display: grid; grid-template-columns: 48px 1fr; gap: 14px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+  .num { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #1A1630; font-weight: 800; font-size: 20px; }
+  .who { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-left: 6px; vertical-align: middle; }
+  .me { background: rgba(242,200,121,.18); color: var(--gold); }
+  .ai { background: rgba(169,184,232,.18); color: #C9D2FF; }
+  h2 { font-size: 19px; margin: 0 0 4px; }
+  p, li { color: var(--dim); margin: 4px 0; }
+  code { background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 6px; color: var(--ink); }
+  .arrow { text-align: center; color: var(--gold); font-size: 20px; line-height: 1; }
+  .note { margin-top: 28px; padding: 16px 20px; border-radius: 14px; border: 1px dashed var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <h1>showroom-kit 사용법</h1>
+  <p class="lead">처음부터 배포까지 순서대로 따라 하면 된다. <span class="who me">선생님</span>은 내가 직접, <span class="who ai">AI</span>는 AI 도구가 하는 일이다.</p>
+
+  <div class="flow">
+    <div class="step"><div class="num">1</div><div>
+      <h2>계정 만들기 <span class="who me">선생님</span></h2>
+      <p>GitHub 계정을 만들고, Vercel(vercel.com)에 GitHub 계정으로 가입한다. Node.js 22.18 이상과 git, AI 코딩 도구 하나를 설치한다.</p>
+    </div></div>
+    <div class="arrow">↓</div>
+    <div class="step"><div class="num">2</div><div>
+      <h2>템플릿 복사 <span class="who me">선생님</span></h2>
+      <p>키트 저장소에서 <code>Use this template</code> → <code>Create a new repository</code>. 내 저장소를 내 컴퓨터로 내려받아 AI 도구로 연다.</p>
+    </div></div>
+    <div class="arrow">↓</div>
+    <div class="step"><div class="num">3</div><div>
+      <h2>"쇼룸 만들어줘" <span class="who me">선생님</span> <span class="who ai">AI</span></h2>
+      <p>AI가 이름과 소속, 큰 제목, 소개, 링크, 콘셉트를 하나씩 묻는다. 학교 이름은 공개해도 될 때만 넣는다. AI가 설정 파일을 채우고 링크마다 그림 장면을 써서 보여 준다.</p>
+    </div></div>
+    <div class="arrow">↓</div>
+    <div class="step"><div class="num">4</div><div>
+      <h2>그림 만들기 <span class="who me">선생님</span></h2>
+      <p>AI가 만든 <code>docs/art-brief.md</code>를 연다. 그림마다 [A][B][C] 세 칸을 이어 붙여 Gemini나 ChatGPT에 넣는다.</p>
+      <ul>
+        <li>1번 그림을 먼저 만들고, 마음에 들면 나머지는 1번을 기준 이미지로 첨부해 같은 화풍으로 만든다.</li>
+        <li>만든 그림은 <code>art-raw/</code> 폴더에 표에 적힌 파일 이름 그대로 저장한다.</li>
+        <li>무료 요금제는 하루 생성 횟수 제한이 있다. 그림이 없어도 사이트는 동작하니 천천히 채워도 된다.</li>
+      </ul>
+    </div></div>
+    <div class="arrow">↓</div>
+    <div class="step"><div class="num">5</div><div>
+      <h2>"그림 넣어줘" <span class="who ai">AI</span></h2>
+      <p>AI가 그림을 웹용으로 바꾸고(<code>npm run art</code>), 검사하고(<code>npm run check</code>), 빌드를 확인한 뒤 커밋하고 푸시한다.</p>
+    </div></div>
+    <div class="arrow">↓</div>
+    <div class="step"><div class="num">6</div><div>
+      <h2>배포 <span class="who me">선생님</span></h2>
+      <p>Vercel에서 <code>Add New → Project</code> → 내 저장소 <code>Import</code> → <code>Deploy</code>. 프로젝트 이름이 주소(<code>이름.vercel.app</code>)가 된다. 다음부터는 푸시만 하면 자동으로 바뀐다.</p>
+    </div></div>
+  </div>
+
+  <div class="note">
+    <p><b>지켜 주세요</b>: 학생 이름, 사진, 성적 같은 개인정보와 실제 사람 얼굴 그림은 넣지 않습니다. API 키나 비밀번호는 필요 없고, 저장소에 넣으면 안 됩니다. 내가 만든 것만 링크합니다.</p>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.next
+node_modules
+out
+dist
+.env
+.env.*
+!.env.example
+.DS_Store
+npm-debug.log*
+.claude/
+.vercel
+/art-raw/
+next-env.d.ts
